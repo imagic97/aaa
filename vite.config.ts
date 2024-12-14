@@ -7,6 +7,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [
     vue(),
     vueDevTools()
@@ -18,6 +19,7 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
+    outDir: './docs',
     rollupOptions: {
       output: {
         manualChunks: (id: string) => {
