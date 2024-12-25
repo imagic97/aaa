@@ -1,1 +1,0 @@
-import{_ as o}from"./index-CfO8OyKQ.js";import{e as t,o as c,r}from"./vendor-others-DrWRsYpb.js";import"./vite-ExcqyqRp.js";const n={};function s(a,_){const e=r("Sfc");return c(),t(e,{code:"<template> test </template>"})}const i=o(n,[["render",s]]);export{i as default};

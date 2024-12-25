@@ -3,10 +3,11 @@ import { computed, onMounted, ref } from 'vue'
 
 import clipboard from '@/services/clipboard'
 
-const ipAddress = ref<string>('')
+const ipAddress = ref<{ipAddress:string, timestamp: string}>()
 
 const items = computed(() => {
-  return ipAddress.value.split(/\s+/)
+  if(!ipAddress.value)return []
+  return ipAddress.value.ipAddress.split(/\s+/)
 })
 
 const fetchInfo = ({ username, repo, issueNumber }: { username: string, repo: string, issueNumber: number }) => {
@@ -40,6 +41,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <h4>time: {{ ipAddress?.timestamp }}</h4>
   <div v-for="(item, index) in items">
     <label>ipv6_{{ index+1 }}: </label>
     <span>[{{ item }}]</span>
