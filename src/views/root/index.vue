@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+
+import clipboard from '@/services/clipboard'
 
 const ipAddress = ref<string>('')
+
+const items = computed(() => {
+  return ipAddress.value.split(/\s+/)
+})
 
 const fetchInfo = ({ username, repo, issueNumber }: { username: string, repo: string, issueNumber: number }) => {
   const url = `https://api.github.com/repos/${username}/${repo}/issues/${issueNumber}`
@@ -20,6 +26,10 @@ const fetchInfo = ({ username, repo, issueNumber }: { username: string, repo: st
     })
 }
 
+const doCopy = (item:string) => {
+  clipboard.copy(item)
+}
+
 onMounted(() => {
   let matches = window.location.href.match(/https:\/\/([^\/]+)\.github\.io\/([^\/]+)\/#/)
 
@@ -29,4 +39,10 @@ onMounted(() => {
 })
 </script>
 
-<template>{{ ipAddress }}</template>
+<template>
+  <div v-for="(item, index) in items">
+    <label>ipv6_{{ index+1 }}: </label>
+    <span>[{{ item }}]</span>
+    <button @click="doCopy(item)">copy</button>
+  </div>
+</template>
