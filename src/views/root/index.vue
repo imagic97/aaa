@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 
 import clipboard from '@/services/clipboard'
 
-const ipAddress = ref<{ipAddress:string, timestamp: string}>()
+const route = useRoute()
+
+const ipAddress = ref<{ ipAddress: string, timestamp: string }>()
 
 const items = computed(() => {
-  if(!ipAddress.value)return []
+  if (!ipAddress.value) return []
   return ipAddress.value.ipAddress.split(/\s+/)
 })
 
@@ -27,15 +30,22 @@ const fetchInfo = ({ username, repo, issueNumber }: { username: string, repo: st
     })
 }
 
-const doCopy = (item:string) => {
+const doCopy = (item: string) => {
   clipboard.copy(item)
 }
 
 onMounted(() => {
+  let issueNumber = 3
+  if (route.query && typeof route.query.issue === 'string') {
+    issueNumber = parseInt(route.query.issue)
+    if(isNaN(issueNumber)) {
+      issueNumber = 3
+    }
+  }
   let matches = window.location.href.match(/https:\/\/([^\/]+)\.github\.io\/([^\/]+)\/#/)
 
   if (matches) {
-    fetchInfo({ repo: matches[2], username: matches[1], issueNumber: 2 })
+    fetchInfo({ repo: matches[2], username: matches[1], issueNumber })
   }
 })
 </script>
@@ -43,7 +53,7 @@ onMounted(() => {
 <template>
   <h4>time: {{ ipAddress?.timestamp }}</h4>
   <div v-for="(item, index) in items">
-    <label>ipv6_{{ index+1 }}: </label>
+    <label>ipv6_{{ index + 1 }}: </label>
     <span>[{{ item }}]</span>
     <button @click="doCopy(item)">copy</button>
   </div>
