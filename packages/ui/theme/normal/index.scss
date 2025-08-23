@@ -1,0 +1,10 @@
+@use '../common.scss';
+@use './light.scss';
+@use './dark.scss';
+
+@use './SaButton.scss';
+
+
+:root {
+  background-color: var(--sa-color-background);
+}

@@ -1,0 +1,39 @@
+.theme-normal {
+  --sa-hsl-primary: 200;
+  --sa-hsl-danger: 0;
+
+  --sa-color-primary: hsl(var(--sa-hsl-primary), 100%, 60%);
+  --sa-color-danger: hsl(var(--sa-hsl-danger), 86%, 52%);
+
+  --sa-color-background: #ffffff;
+
+  --sa-color-btn-bg: hsl(0, 0%, 100%);
+  --sa-color-btn-bg-hover: hsl(0, 0%, 97%);
+  --sa-color-btn-bg-disabled: hsl(0, 0%, 85%);
+  --sa-color-btn-border: #bdbdbd;
+  --sa-color-btn-border-hover: var(--sa-color-primary);
+  --sa-color-btn-border-disabled: #bdbdbd;
+  --sa-color-btn-text: hsl(255, 0%, 10%);
+  --sa-color-btn-text-hover: var(--sa-color-primary);
+  --sa-color-btn-text-disabled: hsl(255, 0%, 10%);
+
+  --sa-color-primary-btn-bg: var(--sa-color-primary);
+  --sa-color-primary-btn-bg-hover: hsl(var(--sa-hsl-primary), 100%, 75%);
+  --sa-color-primary-btn-bg-disabled: hsl(var(--sa-hsl-primary), 50%, 48%);
+  --sa-color-primary-btn-border: var(--sa-color-primary);
+  --sa-color-primary-btn-border-hover: hsl(var(--sa-hsl-primary), 75%, 60%);
+  --sa-color-primary-btn-border-disabled: hsl(var(--sa-hsl-primary), 50%, 60%);
+  --sa-color-primary-btn-text: #ffffff;
+  --sa-color-primary-btn-text-hover: #ffffff;
+  --sa-color-primary-btn-text-disabled: #e2e0e0;
+
+  --sa-color-danger-btn-bg: var(--sa-color-danger);
+  --sa-color-danger-btn-bg-hover: hsla(var(--sa-hsl-danger), 70%, 50%, 0.6);
+  --sa-color-danger-btn-bg-disabled: hsl(var(--sa-hsl-danger), 70%, 50%);
+  --sa-color-danger-btn-border: var(--sa-color-danger);
+  --sa-color-danger-btn-border-hover: hsl(var(--sa-hsl-danger), 75%, 60%);
+  --sa-color-danger-btn-border-disabled: hsl(var(--sa-hsl-danger), 50%, 60%);
+  --sa-color-danger-btn-text: #ffffff;
+  --sa-color-danger-btn-text-hover: #ffffff;
+  --sa-color-danger-btn-text-disabled: #e2e0e0;
+}

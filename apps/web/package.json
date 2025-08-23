@@ -1,0 +1,33 @@
+{
+  "name": "web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "vue": "^3.5.17",
+    "vue-router": "^4.5.1",
+    "ui": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.32",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.22.0",
+    "@rushstack/eslint-patch": "^1.7.2",
+    "npm-run-all2": "^8.0.4",
+    "@tsconfig/node22": "^22.0.2",
+    "typescript": "5.5.4",
+    "vite": "^7.0.0",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "vue-tsc": "^2.2.10",
+    "vite-plugin-vue-devtools": "^7.7.7",
+    "prettier": "3.5.3"
+  }
+}

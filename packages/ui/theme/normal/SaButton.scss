@@ -1,0 +1,114 @@
+.sa-button {
+  box-sizing: border-box;
+  display: block;
+  min-width: 80px;
+  padding: 7px 7px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+
+  transition-property: background-color, border-color, color;
+  transition-duration: 150ms;
+
+  color: var(--sa-color-btn-text);
+  border-color: var(--sa-color-btn-border);
+  background-color: var(--sa-color-btn-bg);
+
+  &[rounded] {
+    border-radius: 18px;
+  }
+
+  &[circle] {
+    min-width: unset;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    line-height: unset;
+    border-radius: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &:hover {
+    color: var(--sa-color-btn-text-hover);
+    border-color: var(--sa-color-btn-border-hover);
+    background-color: var(--sa-color-btn-bg-hover);
+  }
+
+  &.is-disabled {
+    color: var(--sa-color-btn-text-disabled);
+    border-color: var(--sa-color-btn-border-disabled);
+    background-color: var(--sa-color-btn-bg-disabled);
+  }
+
+  &[primary] {
+    color: var(--sa-color-primary-btn-text);
+    border-color: var(--sa-color-primary-btn-border);
+    background-color: var(--sa-color-primary-btn-bg);
+
+    &:hover {
+      color: var(--sa-color-primary-btn-text-hover);
+      border-color: var(--sa-color-primary-btn-border-hover);
+      background-color: var(--sa-color-primary-btn-bg-hover);
+    }
+
+    &.is-disabled {
+      color: var(--sa-color-primary-btn-text-disabled);
+      border-color: var(--sa-color-primary-btn-border-disabled);
+      background-color: var(--sa-color-primary-btn-bg-disabled);
+    }
+  }
+
+  &[danger] {
+    color: var(--sa-color-danger-btn-text);
+    border-color: var(--sa-color-danger-btn-border);
+    background-color: var(--sa-color-danger-btn-bg);
+
+    &:hover {
+      color: var(--sa-color-danger-btn-text-hover);
+      border-color: var(--sa-color-danger-btn-border-hover);
+      background-color: var(--sa-color-danger-btn-bg-hover);
+    }
+
+    &.is-disabled {
+      color: var(--sa-color-danger-btn-text-disabled);
+      border-color: var(--sa-color-danger-btn-border-disabled);
+      background-color: var(--sa-color-danger-btn-bg-disabled);
+    }
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+  }
+
+  &.is-loading {
+    cursor: not-allowed;
+
+    & > i:first-child {
+      & ~ *{
+        margin-left: 2px;
+      }
+
+      &::before {
+        animation: loading 2s linear infinite;
+      }
+    }
+  }
+
+  @keyframes loading {
+    from {
+      transform: rotateZ(0deg);
+    }
+
+    to {
+      transform: rotateZ(360deg);
+    }
+  }
+}
