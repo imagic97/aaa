@@ -1,62 +1,78 @@
-import os from 'os'
+import { exec } from 'child_process'
 
-import HttpClient from '../httpClient'
+import HttpClient from '../HttpClient'
+import { Logger } from '../Logger'
+
+type IpInterface = {
+  IPAddress: string
+  SuffixOrigin: string
+  InterfaceAlias: string
+}
 
 const isNode = typeof process !== 'undefined' && process.versions && process.versions.node
 
-function getAllIPs() {
-  const ips: Record<string, Array<{ interface: string; address: string }>> = {
-    IPv4: [],
-    IPv6: []
-  }
-  if (!isNode) return ips
-
-  const interfaces = os.networkInterfaces()
-
-  for (const interfaceName in interfaces) {
-    const _interface = interfaces[interfaceName]
-    if (!_interface) continue
-    _interface.forEach((iface) => {
-      if (!iface.internal) {
-        if (iface.family === 'IPv4') {
-          ips.IPv4.push({
-            interface: interfaceName,
-            address: iface.address
-          })
-        } else if (iface.family === 'IPv6') {
-          ips.IPv6.push({
-            interface: interfaceName,
-            address: iface.address
-          })
-        }
+const getIpv6 = async () => {
+  const _promise = new Promise<string | null>((resolve, reject) => {
+    exec(
+      `powershell -Command "(Get-NetIPAddress -AddressFamily IPv6 | Where-Object {  $_.IPAddress -ne '::1' -and $_.SuffixOrigin -ne 'Random' -and  $_.InterfaceAlias -notlike '*Wi-Fi Direct*'}) | ConvertTo-Json"`,
+      (error, stdout, stderr) => {
+        let interfaces: Array<IpInterface> = JSON.parse(stdout)
+        const found = interfaces
+          .filter((el) => el.InterfaceAlias === 'WLAN')
+          .map((el) => el.IPAddress)
+          .join(',')
+        resolve(found)
       }
-    })
-  }
+    )
+  })
 
-  return ips
+  await _promise
+  return _promise
 }
 
-if (isNode) {
-  const ips = getAllIPs()
-  console.log('所有 IP 地址:', ips)
-
-  ips.IPv6.slice(0, 1).forEach(async (el) => {
-    try {
-      // 发送 JSON 数据
-      const jsonResponse = await HttpClient.postJsonpost({
-        url: 'https://api.chuckfang.com/imagic',
-        data: {
-          title: 'ipaddress',
-          msg: `${el.address}`,
-          url: `moonlight://[${el.address}]:47989`
-        },
-        options: {}
-      })
-      console.log('JSON Response:', jsonResponse)
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error('HTTP Client Error:', error.message)
+const getIpv4 = async () => {
+  const _promise = new Promise<string | null>((resolve, reject) => {
+    exec(
+      `powershell -Command "(Get-NetIPAddress -AddressFamily IPv4 | Where-Object {  $_.IPAddress -ne '::1' -and $_.SuffixOrigin -ne 'Random' -and $_.InterfaceAlias -ne 'WLAN' -and  $_.InterfaceAlias -notlike '*Wi-Fi Direct*'}) | ConvertTo-Json"`,
+      (error, stdout, stderr) => {
+        let interfaces: Array<IpInterface> = JSON.parse(stdout)
+        const found = interfaces.find((el) => el.InterfaceAlias === 'WLAN')
+        resolve(found?.IPAddress ?? null)
       }
-    }
+    )
   })
+
+  await _promise
+  return _promise
+}
+
+let prevString: string | null = null
+
+export default async function main() {
+  if (!isNode) return
+
+  try {
+    const ipv6 = await getIpv6()
+    if (ipv6 === prevString) return
+    prevString = ipv6
+    Logger.log('ipv6:', ipv6)
+    // 发送 JSON 数据
+    const jsonResponse = await HttpClient.postJsonpost({
+      url: 'https://api.chuckfang.com/imagic',
+      data: {
+        title: 'ipaddress',
+        msg: `${ipv6}`
+      },
+      options: {}
+    })
+    Logger.log('JSON Response:', jsonResponse)
+  } catch (error) {
+    if (error instanceof Error) {
+      Logger.error('HTTP Client Error:', error.message)
+    }
+  }
+}
+
+if (require.main === module) {
+  main()
 }

@@ -64,7 +64,12 @@ const onClick = (event: MouseEvent) => {
     @click="onClick">
 
     <template v-if="props.loading !== undefined">
-      <i class="bi bi-arrow-repeat"></i>
+        <i class="sa-button-loading"></i>
+        <i class="sa-button-loading"></i>
+        <i class="sa-button-loading"></i>
+        <i class="sa-button-loading"></i>
+        <i class="sa-button-loading"></i>
+        <i class="sa-button-loading"></i>
     </template>
 
     <template v-if="!(props.type === 'circle' && _loading)">

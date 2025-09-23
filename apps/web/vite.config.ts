@@ -9,8 +9,8 @@ export default defineConfig({
   plugins: [vue(), vueDevTools()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-    },
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
   },
   server: {
     allowedHosts: true
@@ -36,15 +36,15 @@ export default defineConfig({
           if (id.includes('/node_modules/@vue/compiler-sfc/')) {
             return 'vendor-vue-compiler-sfc'
           }
-        },
-      },
-    },
+        }
+      }
+    }
   },
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@use "sass:math"; ',
-      },
-    },
-  },
+        additionalData: '@use "sass:math";  '
+      }
+    }
+  }
 })

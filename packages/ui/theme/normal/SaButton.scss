@@ -90,25 +90,9 @@
 
   &.is-loading {
     cursor: not-allowed;
-
-    & > i:first-child {
-      & ~ *{
-        margin-left: 2px;
-      }
-
-      &::before {
-        animation: loading 2s linear infinite;
-      }
-    }
   }
 
-  @keyframes loading {
-    from {
-      transform: rotateZ(0deg);
-    }
-
-    to {
-      transform: rotateZ(360deg);
-    }
+  &-loading {
+    
   }
 }

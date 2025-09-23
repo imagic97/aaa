@@ -12,6 +12,14 @@ const router = createRouter({
       component: () => import('@/views/Home/index.vue')
     },
     {
+      path: '/video',
+      name: 'video',
+      meta: {
+        title: '视频播放'
+      },
+      component: () => import('@/views/Video/index.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       meta: {
         title: ''
@@ -24,12 +32,15 @@ const router = createRouter({
   }
 })
 
+const DYNAMIC_IMPORT_ERRORS = [
+  'error loading dynamically imported module',
+  'Failed to fetch dynamically imported module',
+  'Importing a module script failed',
+];
+
 router.onError((error: Error) => {
-  if (
-    error.message.includes('error loading dynamically imported module') ||
-    error.message.includes('Failed to fetch dynamically imported module') ||
-    error.message.includes('Importing a module script failed')
-  ) {
+  if (DYNAMIC_IMPORT_ERRORS.some(msg => error.message.includes(msg))) {
+    console.error('Dynamic import failed:', error);
   }
 })
 
