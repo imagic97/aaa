@@ -17,17 +17,10 @@
     "ui": "*"
   },
   "devDependencies": {
-    "@types/node": "^22.15.32",
-    "eslint": "^8.57.0",
-    "eslint-plugin-vue": "^9.22.0",
-    "@rushstack/eslint-patch": "^1.7.2",
-    "npm-run-all2": "^8.0.4",
-    "typescript": "5.5.4",
-    "@tsconfig/node22": "^22.0.2",
-    "vue-tsc": "^2.2.10",
     "vite": "^7.0.0",
-    "@vitejs/plugin-vue": "^6.0.0",
+    "vue-tsc": "^2.2.10",
+    "eslint-plugin-vue": "^9.22.0",
     "vite-plugin-vue-devtools": "^7.7.7",
-    "prettier": "3.5.3"
+    "@vitejs/plugin-vue": "^6.0.0"
   }
 }

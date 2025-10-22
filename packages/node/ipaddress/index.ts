@@ -9,8 +9,6 @@ type IpInterface = {
   InterfaceAlias: string
 }
 
-const isNode = typeof process !== 'undefined' && process.versions && process.versions.node
-
 const getIpv6 = async () => {
   const _promise = new Promise<string | null>((resolve, reject) => {
     exec(
@@ -18,7 +16,7 @@ const getIpv6 = async () => {
       (error, stdout, stderr) => {
         let interfaces: Array<IpInterface> = JSON.parse(stdout)
         const found = interfaces
-          .filter((el) => el.InterfaceAlias === 'WLAN')
+          .filter((el) => el.InterfaceAlias === 'WLAN' && !el.IPAddress.startsWith('fe80::'))
           .map((el) => el.IPAddress)
           .join(',')
         resolve(found)
@@ -49,13 +47,15 @@ const getIpv4 = async () => {
 let prevString: string | null = null
 
 export default async function main() {
-  if (!isNode) return
-
   try {
     const ipv6 = await getIpv6()
-    if (ipv6 === prevString) return
-    prevString = ipv6
     Logger.log('ipv6:', ipv6)
+
+    Logger.log('ipv6: prevString', prevString)
+    if (ipv6 === prevString) return
+
+    prevString = ipv6
+
     // 发送 JSON 数据
     const jsonResponse = await HttpClient.postJsonpost({
       url: 'https://api.chuckfang.com/imagic',

@@ -28,7 +28,7 @@ async function main() {
       await animeMain()
       Logger.log('---------anime end---------')
     },
-    60 * 60 * 5,
+    60 * 60 * 1,
     true
   )
 
